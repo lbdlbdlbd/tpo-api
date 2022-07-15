@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
-import Posts from "../../components/posts/Posts";
+//import Posts from "../../components/posts/Posts";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Search from "../../components/search/Search";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -23,7 +24,7 @@ export default function Home() {
     <>
       <Header></Header>
       <div className="home">
-        <Posts posts = {posts}></Posts>
+        <Search posts = {posts}></Search>
         <Sidebar></Sidebar>
       </div>
     </>

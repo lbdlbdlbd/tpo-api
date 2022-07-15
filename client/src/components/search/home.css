@@ -1,0 +1,24 @@
+.home{
+    display: flex;
+}
+
+.input{
+    text-align: center;
+    font-family: "Lora", serif;
+    margin: 10px;
+    font-size: 28px;
+    border: none;
+    color: gray;
+    border-bottom: 1px solid lightgray;
+    height: 50px;
+    width: 80%;
+    display: flex;
+    align-self: center;
+}
+
+.posts{
+    flex: 9;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+}

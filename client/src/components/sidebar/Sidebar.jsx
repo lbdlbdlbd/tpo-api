@@ -21,8 +21,9 @@ export default function Sidebar() {
             <span className="sidebarTitle"> SOBRE NOSOTROS</span>
             <img className="sidebarImg1" src={sidebarimg2} alt=""></img>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                Impedit expedita reiciendis voluptatum atque repellat consequatur obcaecati numquam sunt iusto. 
+            Organizamos nuestras recetas para facilitarte el trabajo.
+            Podes publicar tus propias recetas registrandote en nuestro sitio!
+            Elegi alguna de las categorias para ver todas sus recetas: 
             </p>
         </div>
         <div className="sidebarItem">

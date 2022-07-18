@@ -21,7 +21,7 @@
     flex-direction: column;
 }
 
-.loginForm > label{
+.loginForm > label, :link{
     margin: 10px 0;
 }
 

@@ -8,6 +8,10 @@ export default function Settings() {
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [securityWord, setSecurityWord] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -20,6 +24,10 @@ export default function Settings() {
     const updatedUser = {
       userId: user._id,
       username,
+      name,
+      surname,
+      phone,
+      securityWord,
       email,
       password,
     };
@@ -69,17 +77,43 @@ export default function Settings() {
           <input
             type="text"
             placeholder={user.username}
-            onChange={(e) => setUsername(e.target.value)}
+            defaultValue={user.username}
+            disabled
+          />
+          <label>Nombre</label>
+          <input
+            type="text"
+            defaultValue={user.name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label>Apellido</label>
+          <input
+            type="text"
+            defaultValue={user.surname}
+            onChange={(e) => setSurname(e.target.value)}
+          />
+          <label>Telefono</label>
+          <input
+            type="text"
+            defaultValue={user.phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <label>Palabra de Seguridad</label>
+          <input
+            type="text"
+            defaultValue={user.securityWord}
+            onChange={(e) => setSecurityWord(e.target.value)}
           />
           <label>Email</label>
           <input
             type="email"
-            placeholder={user.email}
+            defaultValue={user.email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <label>Contraseña</label>
           <input
             type="password"
+            defaultValue={user.password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="settingsSubmit" type="submit">

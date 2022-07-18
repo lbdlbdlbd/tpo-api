@@ -38,6 +38,23 @@ router.put("/:id", async (req,res)=>{
     }
 });
 
+router.post("/:id", async (req,res)=>{
+  const {username, rate} =req.body;
+  try{
+      const post = await Post.findById(req.params.id);
+      try{
+        post.rates = post.rates.concat({"username":username,"rate":rate}); 
+        console.log(post.rates)
+        await post.save();
+        res.status(200).json(post);
+      }catch(err){
+          res.status(500).json(err);
+      }
+  }catch(err){
+      res.status(500).json(err);
+  }
+});
+
 //DELETE POST
 router.delete("/:id", async (req,res)=>{
     try{

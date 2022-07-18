@@ -22,7 +22,20 @@ const PostSchema = new mongoose.Schema(
         categories:{
             type:Array,
             required:false
-        }
+        },
+        rates:[
+            {
+                username:{
+                    type:String,
+                    unique:true
+                },
+                rate:{
+                    type:Number,
+                    unique: true,
+                    default:0
+                }
+            }
+        ]
     },
     {timestamps:true}
 );

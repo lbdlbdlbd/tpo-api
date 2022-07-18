@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
+import {Rating} from 'react-simple-star-rating'
 
 export default function SinglePost() {
     const location = useLocation();
@@ -14,6 +15,13 @@ export default function SinglePost() {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [updateMode, setUpdateMode] = useState(false);
+    const [rates, setRates] = useState([])
+    const [rating, setRating] = useState(0)
+    var rateP = 0;
+    var count = 0;
+    var myRate = 0;
+
+    const handleRating = (rating) => (setRating(rating), handleRate(rating))
 
     useEffect(() => {
         const getPost = async () =>{
@@ -21,9 +29,20 @@ export default function SinglePost() {
             setPost(res.data);
             setTitle(res.data.title);
             setDesc(res.data.desc);
+            setRates(res.data.rates);
         };
         getPost();
     }, [path]);
+
+    const rateCalculation = async({rates})=>{
+        rates.map((r)=>(
+            rateP += r.rate,
+            count ++
+            ))
+        rateP = rateP/count
+        return rateP
+    }
+    rateCalculation({rates});
 
     const handleDelete = async () => {
         try {
@@ -44,6 +63,27 @@ export default function SinglePost() {
             setUpdateMode(false);
         } catch (err) {}
     };
+
+    const handleRate = async (rating) => {
+        try {
+            await axios.post(`/posts/${post._id}`, {
+                username: user.username, 
+                rate: rating
+            });
+        } catch (error) {
+            
+        }
+    }
+
+    const handleMyRate = async ({rates}) => {
+        const filtered = rates.filter((r)=>(r.username === user?.username))
+
+        if (filtered!==[] && filtered[0].rate > 0){
+            myRate =filtered[0].rate;
+        }
+        return myRate 
+    }
+    handleMyRate({rates})
 
   return (
     <div className="singlePost">
@@ -83,7 +123,16 @@ export default function SinglePost() {
                         <b> {post.username}</b>
                     </Link>
                     </span>
-                <span className="singlePostDate">{new Date(post.createdAt).toDateString()} </span>
+                    <div>
+                    <span className="singlePostDate">{count} Calificaciones: </span>
+                  <Rating               
+                    ratingValue={rateP}
+                    size={20}                    
+                    readonly={true}
+                    className="singlePostDate"
+                    onChange={(e)=>setRates(e.target.value)}
+                  />
+                </div>
             </div>
             {updateMode ? (
                 <textarea
@@ -92,7 +141,36 @@ export default function SinglePost() {
                     onChange={(e) => setDesc(e.target.value)}
                 />
             ) : (
-                <p className="singlePostDesc">{desc}</p>
+                <div>
+                    <p className="singlePostDesc">{desc}</p>
+                    {myRate > 0 ? (
+                        <div className="demo">
+                            <label className="singlePostTitle">Mi Calificacion: </label>
+                            <Rating
+                                ratingValue={myRate}
+                                size={50}
+                                readonly={true}
+                                onChange={(e) => setRates(e.target.value)}
+                            />
+                        </div>
+                    ) : (
+                        <div>
+                        {post.username !== user?.username && (
+                            <div className="demo">
+                                <label className="singlePostTitle">Calificar: </label>
+                                <Rating
+                                    ratingValue={rating}
+                                    size={50}
+                                    readonly={rating>0}
+                                    onClick={handleRating}
+                                    
+                                />
+                            </div>)}
+                        </div>
+                
+                )}
+
+                </div>
             )}
             {updateMode && (
                 <button className="singlePostButton" onClick={handleUpdate}>
@@ -103,3 +181,88 @@ export default function SinglePost() {
     </div>
   );
 }
+
+/*
+<span className="singlePostDate">{new Date(post.createdAt).toDateString()} </span>
+*/
+
+/*
+                <div>
+                    <p className="singlePostDesc">{desc}</p>
+                    {myRate > 0 ? (
+                        <div className="demo">
+                            <label className="singlePostTitle">Mi Calificacion: </label>
+                            <Rating
+                                ratingValue={myRate}
+                                size={50}
+                                readonly={true}
+                                onChange={(e) => setRates(e.target.value)}
+                            />
+                        </div>
+                    ) : ({
+                        post.username !== user?.username && (
+                            <div className="demo">
+                                <label className="singlePostTitle">Calificar: </label>
+                                <Rating
+                                    ratingValue={myRate}
+                                    size={50}
+
+                                    onChange={(e) => setRates(e.target.value)}
+                                />
+                </div>
+                )}
+                )}
+
+                </div>
+
+                
+
+                <div>
+                    <p className="singlePostDesc">{desc}</p>
+                    {post.username !== user?.username && (
+                        {myRate > 0 ? (
+                            <div className="demo">
+                                <label className="singlePostTitle">Mi Calificacion: </label>
+                                <Rating
+                                    ratingValue={myRate}
+                                    size={50}
+                                    readonly={true}
+                                    onChange={(e) => setRates(e.target.value)}
+                                />
+                            </div>
+                        ) : (
+                            <div className="demo">
+                                <label className="singlePostTitle">Calificar: </label>
+                                <Rating
+                                    ratingValue={myRate}
+                                    size={50}
+
+                                    onChange={(e) => setRates(e.target.value)}
+                                />
+                            </div>
+                            )}
+                    )}
+                </div>
+                    )}
+                    {myRate > 0 ? (
+                        <div className="demo">
+                            <label className="singlePostTitle">Mi Calificacion: </label>
+                            <Rating
+                                ratingValue={myRate}
+                                size={50}
+                                readonly={true}
+                                onChange={(e) => setRates(e.target.value)}
+                            />
+                        </div>
+                    ) : ({
+                        post.username !== user?.username && (
+                            <div className="demo">
+                                <label className="singlePostTitle">Calificar: </label>
+                                <Rating
+                                    ratingValue={myRate}
+                                    size={50}
+
+                                    onChange={(e) => setRates(e.target.value)}
+                                />
+                    </div>
+*/

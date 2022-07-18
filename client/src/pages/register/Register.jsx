@@ -69,6 +69,10 @@ import "./register.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [securityWord, setSecurityWord] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -79,6 +83,10 @@ export default function Register() {
     try {
       const res = await axios.post("/auth/register", {
         username,
+        name,
+        surname,
+        phone,
+        securityWord,
         email,
         password,
       });
@@ -91,12 +99,33 @@ export default function Register() {
     <div className="register">
       <span className="registerTitle">Registrarse</span>
       <form className="registerForm" onSubmit={handleSubmit}>
-        <label>Usuario</label>
+        <label>Nombre</label>
         <input
           type="text"
           className="registerInput"
-          placeholder="Escriba su usuario"
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Escriba su nombre"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <label>Apellido</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Escriba su apellido"
+          onChange={(e) => setSurname(e.target.value)}
+        />
+        <label>Telefono</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Escriba su telefono"
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <label>Palabra de seguridad</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Escriba su palabra de seguridad"
+          onChange={(e) => setSecurityWord(e.target.value)}
         />
         <label>Email</label>
         <input
@@ -104,6 +133,13 @@ export default function Register() {
           className="registerInput"
           placeholder="ejemplo@mail.com"
           onChange={(e) => setEmail(e.target.value)}
+        />
+        <label>Usuario</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Escriba su nombre de usuario"
+          onChange={(e) => setUsername(e.target.value)}
         />
         <label>Contraseña</label>
         <input

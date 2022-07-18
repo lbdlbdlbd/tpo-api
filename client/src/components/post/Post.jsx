@@ -1,8 +1,22 @@
-import "./post.css"
+import "./post.css";
 import { Link } from "react-router-dom";
+import {Rating} from 'react-simple-star-rating'
 
 export default function Post({post}) {
-    const PF = "http://localhost:5000/images/";
+    const PF = "http://localhost:5000/images/"
+    var rateP = 0;
+    var count = 0;
+
+    const rateC = async()=>{
+        post.rates.map((r)=>(
+            rateP += r.rate,
+            count ++
+            ))
+        rateP = rateP/count;
+        return rateP
+    }
+    rateC();
+
   return (
     <div className="post">
         {post.photo && (
@@ -25,6 +39,12 @@ export default function Post({post}) {
             <span className="postDate">
                 {new Date(post.createdAt).toDateString()}
             </span>
+            <Rating                
+                    ratingValue={rateP}
+                    size={20}                    
+                    readonly={true}
+                    className="postDate"
+                  />
         </div>
         <p className="postDesc">
             {post.desc}

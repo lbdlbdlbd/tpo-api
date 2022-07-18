@@ -12,6 +12,9 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "./context/Context";
+import PasswordReset from "./pages/securityWord/securityWord";
+import SecurityWord from "./pages/securityWord/securityWord";
+import PageNotFound from "./components/404/404";
 
 function App() {
   const {user} = useContext(Context);
@@ -22,9 +25,11 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/register" element={user ? <Home></Home> : <Register></Register>}></Route>
         <Route path="/login" element={user ? <Home></Home> : <Login></Login>}></Route>
+        <Route path="/securityWord" element={<SecurityWord></SecurityWord>}></Route>
         <Route path="/settings" element={user ? <Settings></Settings> : <Register></Register>}></Route>
         <Route path="/write" element={user ? <Write></Write> : <Register></Register>}></Route>
         <Route path="/post/:postId" element={<Single></Single>}></Route>
+        <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
         </Routes>
     </Router> 
   );

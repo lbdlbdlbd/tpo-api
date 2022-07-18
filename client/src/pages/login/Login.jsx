@@ -45,6 +45,9 @@ export default function Login() {
             <button className="loginButton" type="submit" disabled={isFetching}>
               Ingresar
             </button>
+            <Link className="link" to="/securityWord">
+              Olvivaste tu Contraseña?
+            </Link>
         </form>
         
         <button className="loginRegisterButton">

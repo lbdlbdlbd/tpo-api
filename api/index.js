@@ -1,19 +1,33 @@
+//Express
 const express = require("express");
+const path = require("path");
+
+//Instancio servidor
 const app = express();
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+
+
+//Importo rutas
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
-const multer = require("multer");
-const path = require("path");
 
+//ENV
+const dotenv = require("dotenv");
 dotenv.config();
-app.use(express.json());
+
+
+const multer = require("multer");
+const bodyParser = require('body-parser');
+
+
+//Engine Setup
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
-//mongoose.connect('mongodb://localhost:27017/test');
+//Conexion DB
+const mongoose = require("mongoose");
 mongoose
     .connect(process.env.MONGO_URL,{
         useNewUrlParser: true,

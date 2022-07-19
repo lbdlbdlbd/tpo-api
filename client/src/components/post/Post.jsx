@@ -22,7 +22,7 @@ export default function Post({post}) {
         {post.photo && (
             <img 
                 className="postImg" 
-                src={PF + post.photo} 
+                src={post.photo} 
                 alt=""
             />
         )}

@@ -11,6 +11,27 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "uploads");
+
+    try {
+      const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dxgjyyj3g/image/upload", data);
+      const {url} = uploadRes.data;
+      const newPost = {
+        username: user.username,
+        title,
+        desc,
+        photo: url
+      };
+      const res = await axios.post("/posts", newPost);
+      window.location.replace("/post/" + res.data._id);
+
+    } catch (error) {
+        console.log(error)
+    }
+/*
     const newPost = {
       username: user.username,
       title,
@@ -29,7 +50,7 @@ export default function Write() {
     try {
       const res = await axios.post("/posts", newPost);
       window.location.replace("/post/" + res.data._id);
-    } catch (err) {}
+    } catch (err) {}*/
   };
   return (
     <div className="write">
